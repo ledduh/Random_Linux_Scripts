@@ -1,0 +1,13 @@
+        Azure Files
+
+      Tier: Premium 
+Redundancy: LRS 
+    Region: UK South
+  Currency: USD
+
+    Data stream per GB/per Month: $1
+      Snapshot per GB/ per Month: $1
+Writes first 10000 tranasactions: free
+                        SMS cost: $0.012 (average Ksh 1.5)
+ Cost per user/patient per month: $3.012
+

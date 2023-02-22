@@ -1,0 +1,14 @@
+Azure File Share Script
+
+sudo mkdir /mnt/sharewm
+if [ ! -d "/etc/smbcredentials" ]; then
+sudo mkdir /etc/smbcredentials
+fi
+if [ ! -f "/etc/smbcredentials/paymentstorageaccountvm.cred" ]; then
+    sudo bash -c 'echo "username=paymentstorageaccountvm" >> /etc/smbcredentials/paymentstorageaccountvm.cred'
+    sudo bash -c 'echo "password=J6I4S/WrUkLPX6HuVjt5ZDsEck1hiEKW+wNlN7mMT6IpnFmNFtrA4pBLfWL24y/AficeaIkyobuV+ASt4rj4xQ==" >> /etc/smbcredentials/paymentstorageaccountvm.cred'
+fi
+sudo chmod 600 /etc/smbcredentials/paymentstorageaccountvm.cred
+
+sudo bash -c 'echo "//paymentstorageaccountvm.file.core.windows.net/sharewm /mnt/sharewm cifs nofail,credentials=/etc/smbcredentials/paymentstorageaccountvm.cred,dir_mode=0777,file_mode=0777,serverino,nosharesock,actimeo=30" >> /etc/fstab'
+sudo mount -t cifs //paymentstorageaccountvm.file.core.windows.net/sharewm /mnt/sharewm -o credentials=/etc/smbcredentials/paymentstorageaccountvm.cred,dir_mode=0777,file_mode=0777,serverino,nosharesock,actimeo=30

@@ -1,0 +1,62 @@
+##Azure Bicep File
+
+##Used to easily provision resources##
+
+##Start by installing:
+---Azure Cli---
+
+sudo apt-get update
+sudo apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
+sudo mkdir -p /etc/apt/keyrings
+curl -sLS https://packages.microsoft.com/keys/microsoft.asc |
+    gpg --dearmor |
+    sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
+sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
+AZ_REPO=$(lsb_release -cs)
+echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" |
+    sudo tee /etc/apt/sources.list.d/azure-cli.list
+sudo apt-get update
+sudo apt-get install azure-cli
+
+#src=https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=apt
+
+
+---Bicep CLI---
+# Fetch the latest Bicep CLI binary
+curl -Lo bicep https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64
+# Mark it as executable
+chmod +x ./bicep
+# Add bicep to your PATH (requires admin)
+sudo mv ./bicep /usr/local/bin/bicep
+# Verify you can now access the 'bicep' command
+bicep --help
+# Done!
+
+
+
+
+##Setup your azure account
+az login
+
+##Fill in your credentialas on the browser pop and you should be connected
+
+##Create storage account using bicep
+
+##Run the below to execute the command
+
+az deployment group create --resource-group 'yourRG' --template-file ./filename.bicep
+
+
+##Sample bicep file content
+@description('Specifies the location for resources.')
+param location string = 'UK South'
+
+resource storage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+  name: 'testbicepstorageacc'
+  sku: {
+    name: 'Standard_LRS'
+  }
+  kind: 'StorageV2'
+  location: location
+}
+
