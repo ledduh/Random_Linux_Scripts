@@ -1,0 +1,26 @@
+VM backup
+neo4j stop
+neo4j-admin backup --backup-dir=<backup-directory> --name=<backup-name>
+neo4j start
+-----OR---
+neo4j-admin database dump --to-path=<path> <database>
+
+restore
+neo4j-admin database import full/incremental
+
+----------------------------
+
+Container backup
+
+docker ps
+docker exec <container-id-or-name> neo4j stop
+docker exec <container-id-or-name> neo4j-admin backup --backup-dir=<backup-directory> --name=<backup-name>
+docker cp <container-id-or-name>:<backup-directory>/<backup-name> <local-backup-directory>
+docker exec <container-id-or-name> neo4j start
+
+restore
+docker exec <container-name-or-id> neo4j-admin restore --from=<container-backup-directory>/<backup-name>
+--can be used also from backupfile from vm--
+
+
+
